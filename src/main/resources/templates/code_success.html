@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Code Success</title>
+    <link th:replace="component::bootstrapCSS">
+
+</head>
+<body>
+<nav th:replace="component::nav"></nav>
+
+<p>
+    Shortened Url is <a th:href="${url}" th:text="${url}" target="_blank">Default Text</a>
+</p>
+
+<footer th:replace="component::footer"></footer>
+<script th:replace="component::jquery"></script>
+<script th:replace="component::popperJS"></script>
+<script th:replace="component::bootstrapJS"></script>
+</body>
+</html>

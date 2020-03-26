@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Homepage</title>
+	<link th:replace="component::bootstrapCSS">
+</head>
+<body>
+<nav th:replace="component::nav"></nav>
+
+<div class="container">	
+	<form  action="/shorten" method="post">
+	<div class="form-group">
+		<label for="urlInput">Put the url</label>
+		<input type="url" class="form-control" id="urlInput" name="url" placeholder="Put the url" />
+	</div>
+	<div class="form-group">
+		<label for="customCode">Custom Code</label>
+		<input type="text" class="form-control" id="customCode" name="customCode" value="NONE" placeholder="Put your custom code here"  maxlength="7" />
+	</div>
+	<div class="form-group">
+		<label for="expiry">Expiration time</label>
+		<input type="month" class="form-control" id="expiry" name="expiry" placeholder="Put your expiration time here" value="null" >
+	</div>
+	<input class="btn btn-primary" type="Submit" value="Shorten"/>
+	</form>
+</div>
+
+<footer th:replace="component::footer"></footer>
+<script th:replace="component::jquery"></script>
+<script th:replace="component::popperJS"></script>
+<script th:replace="component::bootstrapJS"></script>
+</body>
+</html>
