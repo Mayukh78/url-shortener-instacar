@@ -20,6 +20,10 @@ public class UrlController {
 
         return new ModelAndView("index");
     }
+    @GetMapping("favicon.ico")
+    @ResponseBody
+    void returnNoFavicon() {
+    }
      @GetMapping("/{code}")
      public ModelAndView get(@PathVariable String code)
      {
