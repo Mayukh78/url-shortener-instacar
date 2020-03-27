@@ -14,7 +14,12 @@ public class UrlController {
      @Autowired
      UrlDetailsRepository urlDetailsRepository;
 
+    @GetMapping("/")
+    public ModelAndView get()
+    {
 
+        return new ModelAndView("index");
+    }
      @GetMapping("/{code}")
      public ModelAndView get(@PathVariable String code)
      {
