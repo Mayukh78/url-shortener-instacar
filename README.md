@@ -15,7 +15,7 @@ sudo apt install maven
 ```
 For installing docker and docker compose,follow official documentation.
 
-##Deployment
+## Deployment
 
 First clone my repository, then move to project directory
 ```
@@ -28,7 +28,7 @@ docker-compose up --build
 If you want to run with administrator privilege use ```sudo docker-compose up --build``` .
 After spring successfully starts the application you can access it on ```http://localhost:8080/``` . That's it.
 
-##Implementation Logic
+## Implementation Logic
 
 Whenever we get a POST request, we generate a random number and convert it to 7 digit string. The encoding method is base62. So we can store 62^7 different url. If our generated code is already present in the database,then we generate another random number and same process goes on. If the user has put a custom short code,we first check if that code already exists in the database. If it's already present, we return saying the custom already exists,otherwise we save it. 
 
