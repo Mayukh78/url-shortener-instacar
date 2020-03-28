@@ -56,7 +56,7 @@ In root directory there are 2 main files.
 
 ```CodeDetails.java``` is used for generating the short code
 
-```UrlCOntroller.java``` is the controller class that is responsible for managing the user requests.
+```UrlController.java``` is the controller class that is responsible for managing the user requests.
 
 ### View
 
