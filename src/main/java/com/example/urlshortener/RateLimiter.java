@@ -8,7 +8,7 @@ import java.util.Calendar;
 public class RateLimiter {
     private String ip;
 //    Calendar cal= Calendar.getInstance();
-    private Integer curr_min= Calendar.getInstance().MINUTE;
+    private Integer curr_min= Calendar.getInstance().get(Calendar.MINUTE);
     private Integer limit=100; //this contains rate limit
     private long time= 60; //this contains TTL for key
 

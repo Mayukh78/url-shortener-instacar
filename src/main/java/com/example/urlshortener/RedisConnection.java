@@ -4,7 +4,7 @@ import io.lettuce.core.RedisClient;
 import io.lettuce.core.api.StatefulRedisConnection;
 
 public class RedisConnection {
-    private String hostname="127.0.0.1";
+    private String hostname="redis";
     private String port="6379";
 
     public StatefulRedisConnection<String,String> connection()
