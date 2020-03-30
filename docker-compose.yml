@@ -9,11 +9,15 @@ services:
       - "8080:8080"
     depends_on:
       - dbpostgresql
+      - redis
   dbpostgresql:
     image: postgres
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_PASSWORD=1234
       - POSTGRES_USER=postgres
-      - POSTGRES_DB=mydb
+      - POSTGRES_DB=db
+  redis:
+    image: redis
+    ports: "6379:6379"
