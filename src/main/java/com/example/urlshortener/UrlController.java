@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 public class UrlController {
@@ -17,7 +19,6 @@ public class UrlController {
     @GetMapping("/")
     public ModelAndView get()
     {
-
         return new ModelAndView("index");
     }
     //returning no favicon
@@ -42,8 +43,13 @@ public class UrlController {
     }
 
     @PostMapping(path = "/shorten", consumes = "application/x-www-form-urlencoded")
-    public ModelAndView UrlShorten(@RequestParam Map<String,String> Params){
+    public ModelAndView UrlShorten(@RequestParam Map<String,String> Params, HttpServletRequest request){
         RequestDetails requestDetails=new RequestDetails();
+
+        //below code check if a single ip if under/ over of rate limit
+        RateLimiter rateLimiter= new RateLimiter(request.getRemoteAddr());
+        if(rateLimiter.isOver_limit() == true)
+            return new ModelAndView("over_limit");
 
         //below code block populate request detail object from parameter
         if(Params.get("url")!=null)
