@@ -34,10 +34,14 @@ public class RateLimiter {
             else
                 command.incr(key);
             //currently ip is under limit
+            connection.close();
             return false;
         }
         else
+        {
+            connection.close();
             return true;
+        }
     }
 
     public String getIp() {
