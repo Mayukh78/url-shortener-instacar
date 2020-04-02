@@ -20,7 +20,7 @@ public class RateLimiter {
         String key = ip + curr_min.toString(); //key for redis database.
         StatefulRedisConnection<String,String> connection= new RedisConnection().connection();
         RedisCommands<String,String> command = connection.sync();
-        if(command.get(key) == null || Integer.parseInt(command.get(key))< limit-1)
+        if(command.get(key) == null || Integer.parseInt(command.get(key))< limit)
         {
             if(command.get(key) == null)
             {
