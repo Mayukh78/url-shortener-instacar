@@ -1,7 +1,6 @@
 version: "3.3"
 services:
   app:
-    command: mvn clean install -DskipTests
     # container_name: app-springboot-postgresql
     image: url-shortner-docker
     build: ./
