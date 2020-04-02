@@ -4,6 +4,7 @@ import java.time.YearMonth;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,15 +32,15 @@ public class UrlController {
     {
         //if code doesn't exist return not found
         if(urlDetailsRepository.findByCode(code) == null)
-            return new ModelAndView("not_found");
+            return new ModelAndView("not_found", HttpStatus.NOT_FOUND);
             //if Expiry time is lesser than current time then delete the record and return Link Expired
         else if(urlDetailsRepository.findByCode(code).getYm().compareTo(YearMonth.now()) == -1)
         {
             urlDetailsRepository.deleteByCode(code);
-            return new ModelAndView("LinkExpired");
+            return new ModelAndView("LinkExpired" ,HttpStatus.GONE);
         }
         else
-            return new ModelAndView("redirect:"+ urlDetailsRepository.findByCode(code).getUrl());
+            return new ModelAndView("redirect:"+ urlDetailsRepository.findByCode(code).getUrl(),HttpStatus.OK);
     }
 
     @PostMapping(path = "/shorten", consumes = "application/x-www-form-urlencoded")
@@ -49,7 +50,7 @@ public class UrlController {
         //below code check if a single ip if under/ over of rate limit
         RateLimiter rateLimiter= new RateLimiter(request.getRemoteAddr());
         if(rateLimiter.isOver_limit() == true)
-            return new ModelAndView("over_limit");
+            return new ModelAndView("over_limit", HttpStatus.TOO_MANY_REQUESTS);
 
         //below code block populate request detail object from parameter
         if(Params.get("url")!=null)
@@ -69,7 +70,7 @@ public class UrlController {
         UrlDetails urlDetails = urlDetailsRepository.findByUrl(requestDetails.getUrl());
         if(urlDetails != null)
         {
-            ModelAndView modelAndView= new ModelAndView("code_success");
+            ModelAndView modelAndView= new ModelAndView("code_success" ,HttpStatus.OK);
             String url="http://localhost:8080/"+urlDetails.getCode();
             modelAndView.addObject("url",url);
             return modelAndView;
@@ -80,7 +81,7 @@ public class UrlController {
 
         //check if custom code exist
         if (urlDetailsRepository.findByCode(custom_code) != null)
-            return new ModelAndView("code_exists");
+            return new ModelAndView("code_exists", HttpStatus.BAD_REQUEST);
             //if no custom code was provided
         else if(custom_code.equals("NONE")) {
             shortenedCode.codeGeneration(); //this generate a random code
@@ -101,7 +102,7 @@ public class UrlController {
         urlDetailsRepository.save(obj);
 
         String url="http://localhost:8080/"+obj.getCode();
-        ModelAndView modelAndView =new ModelAndView("code_success");
+        ModelAndView modelAndView =new ModelAndView("code_success",HttpStatus.CREATED);
         modelAndView.addObject("url",url);
         return modelAndView;
     }

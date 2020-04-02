@@ -21,6 +21,8 @@ First clone my repository, then move to project directory
 ```
 cd url-shortener-instacar/
 ```
+Then run the following coomand ```mvn clean install -DskipTests```
+
 Then deploy the docker project using the following command
 ```
 docker-compose up --build
@@ -33,6 +35,8 @@ After spring successfully starts the application you can access it on ```http://
 Whenever we get a POST request, we generate a random number and convert it to 7 digit string. The encoding method is base62. So we can store 62^7 different url. If our generated code is already present in the database,then we generate another random number and same process goes on. If the user has put a custom short code,we first check if that code already exists in the database. If it's already present, we return saying the custom already exists,otherwise we save it. 
 
 If a link has a corresponding expiration date,whenever a GET request for that link comes,we check current time is greater than expiration date. If it's greater,we remove from the entry the database.
+
+Whenever a new POST request comes we check if that IP has requested more than the limit mentioned. If yes,then we show a page that they have requested more than limit, otherwise we process it.
 
 ## Project Code Structure
 
@@ -57,6 +61,10 @@ In root directory there are 2 main files.
 ```CodeDetails.java``` is used for generating the short code
 
 ```UrlController.java``` is the controller class that is responsible for managing the user requests.
+
+```RedisConnection.java``` is used to connect to redis database.
+
+```RateLimiter.java``` is the used to to check if a single IP has requested more than limit or not.
 
 ### View
 
